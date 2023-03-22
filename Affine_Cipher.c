@@ -3,7 +3,7 @@
 *              Cryptography CTEC2915                /
 *        Affine Cipher for both brute froce &       /
 *              encryption & Decryption              /
-*****************************************************/
+****************************************************/
 
 /****************************************************
 *                   Created by                      /
@@ -12,7 +12,7 @@
 *              p2668258 Faheem Khan                 /
 *              p2660920 Kira Sherriff               /
 *           All team members contributed            /
-*****************************************************/
+****************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +30,7 @@ char removeNonLetters(char *plaintext);
 int main()
 {
 
-    char plaintext[300]; 
+    char plaintext[1024]; 
     int a, b; // keys 
     int option, menu;
 
@@ -47,7 +47,7 @@ int main()
     also can be used to encryt a text. User can give thier own keys.
 
     Case 2 is for brute forece, used for when the keys are unknown. 
-    Group cipher text =  RILTOEAQGEQDPOJOESPQW
+    Group cipher text =  RILTOEAQGEQDPOJOESPQW = key a = 19, b = 18 
 
     */
 
@@ -90,8 +90,8 @@ int main()
             printf("Enter key a: ");
             scanf("%d", &a);
 
-            // If the key is not relatively prime to 26 loop until input it is
-            // GCD number are 1,3,5,7,9,11,15,17,19,23,25,
+            // If the key is not relatively prime to 26 loop until it is
+            // GCD number are 1,3,5,7,9,11,15,17,19,21,23,25,
             while (gcd(a, 26) != 1)
             {
                 printf("Invalid key for a! Key of a needs to relatively prime to 26: ");
@@ -104,8 +104,8 @@ int main()
             option = 0;
 
             // Letting the user choose if they want to decrypt or encrypt
-            // If 1 Entered Encryption 
-            // If 2 Entered Decrypt
+            // If 1 entered Encrypt 
+            // If 2 entered Decrypt
             while((option != 1) && (option != 2))
             {
                 // Choosing function
@@ -131,7 +131,7 @@ int main()
             case 2: 
                 
                 printf("Enter the text to decrypted: ");
-                scanf("%s", &plaintext);
+                fgets(plaintext, sizeof(plaintext), stdin);
 
                 for (int i = 1; i < strlen(plaintext); i++) 
                 {
@@ -142,7 +142,7 @@ int main()
                 // Looping though the keys for brutefroce
                 for(a = 1; a < 26; a++)
                     {
-                        // Checking keys so only those that are relatively prime to 26
+                        // Checking if key a is relatively prime to 26
                         if (gcd(a, 26) == 1)   
                         {
                             for(b= 0; b < 26; ++b)
@@ -261,7 +261,7 @@ void affineBruteFroce(char *plaintext, int a, int b)
         text[i] = 'A' + decryt;
     }
 
-    text[lengh] = '\0';
+    text[lengh-1] = '\0';
 
     // Will print out all 312 possible decryptions 
     printf("\nPrivare Keys: a = %d, b = %d \tResult: %s\n", a, b, text);
@@ -317,6 +317,5 @@ void affineDecrypt(char *plaintext, int a, int b)
         {
             plaintext[i] = (modInv(a, 26) * ((plaintext[i] - 'A') - b + 26)) % 26 + 'A';
         }
-    }
-    
+    }   
 }
